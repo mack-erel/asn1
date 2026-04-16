@@ -1,43 +1,55 @@
-# `@ldapjs/asn1`
+# `@yrneh_jang/asn1`
 
-`@ldapjs/asn1` is a library for encoding and decoding ASN.1 datatypes in pure
-JS. Currently BER encoding is supported.
+[![npm](https://img.shields.io/npm/v/@yrneh_jang/asn1)](https://www.npmjs.com/package/@yrneh_jang/asn1)
+
+Fork of [`@ldapjs/asn1`](https://github.com/ldapjs/asn1) with **Cloudflare Workers support**.
+
+## Changes from upstream
+
+- `fs` module is lazy-loaded inside the function body instead of at module load time, so the package works in Cloudflare Workers where `fs` is not available.
+
+## Installation
+
+```sh
+npm install @yrneh_jang/asn1
+```
+
+## Usage
 
 ### Decoding
 
-The following reads an ASN.1 sequence with a boolean.
-
 ```js
-const { BerReader, BerTypes } = require('@ldapjs/asn1')
+const { BerReader, BerTypes } = require('@yrneh_jang/asn1')
 const reader = new BerReader(Buffer.from([0x30, 0x03, 0x01, 0x01, 0xff]))
 
 reader.readSequence()
 console.log('Sequence len: ' + reader.length)
 if (reader.peek() === BerTypes.Boolean)
-console.log(reader.readBoolean())
+  console.log(reader.readBoolean())
 ```
 
 ### Encoding
 
-The following generates the same payload as above.
-
 ```js
-const { BerWriter } = require('@ldapjs/asn1');
-const writer = new BerWriter();
+const { BerWriter } = require('@yrneh_jang/asn1')
+const writer = new BerWriter()
 
-writer.startSequence();
-writer.writeBoolean(true);
-writer.endSequence();
+writer.startSequence()
+writer.writeBoolean(true)
+writer.endSequence()
 
-console.log(writer.buffer);
+console.log(writer.buffer)
 ```
 
-## Installation
+## Cloudflare Workers
 
-```sh
-npm install @ldapjs/asn1
+No additional configuration needed. Works out of the box with `nodejs_compat` compatibility flag.
+
+```toml
+# wrangler.toml
+compatibility_flags = ["nodejs_compat"]
 ```
 
-## Bugs
+## License
 
-See <https://github.com/ldapjs/asn1/issues>.
+MIT
