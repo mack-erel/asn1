@@ -8,7 +8,7 @@
   ],
   "name": "@yrneh_jang/asn1",
   "description": "Contains parsers and serializers for ASN.1 (currently BER only). Fork of @ldapjs/asn1 with Cloudflare Workers support (lazy fs loading).",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mack-erel/asn1.git"
